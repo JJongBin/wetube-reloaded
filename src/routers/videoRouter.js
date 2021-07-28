@@ -1,5 +1,5 @@
 import express from "express";
-import { upload, watch, getEdit, postEdit, deleteVideo } from "../controllers/videoController"
+import { upload, watch, getEdit, postEdit, deleteVideo, getUpload, postUpload } from "../controllers/videoController"
 const videoRouter = express.Router();
 
 // const handleWatch = (req, res) => res.send("Watch Video")
@@ -17,5 +17,6 @@ videoRouter.route("/:id(\\d+)/edit").get(getEdit).post(postEdit); // 주석 처�
 // videoRouter.get("/:id(\\d+)/dlelte", deleteVideo)
 // videoRouter.get("/upload", upload)
 
+videoRouter.route("/upload").get(getUpload).post(postUpload); 
 
 export default videoRouter;

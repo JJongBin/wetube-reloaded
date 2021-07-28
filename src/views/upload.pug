@@ -1,0 +1,7 @@
+extends base
+
+block content
+    form(method="POST" action="/videos/upload")      
+        //- action은 없어도됨 씌여있는값이 default
+        input(name="title", placeholder="Title", required, type="text")
+        input(type="submit", value="Upload Video")

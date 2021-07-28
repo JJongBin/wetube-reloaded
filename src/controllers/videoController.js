@@ -4,7 +4,7 @@ export const fakeUser = {
 }
 
 
-const videos = [
+let videos = [
   {
     title: "First Video",
     rating: 5, 
@@ -60,12 +60,29 @@ export const postEdit = (req, res) => {
 };
 
 
-
 export const search = (req, res) => res.send("Search Videos");
-
 export const upload = (req, res) => res.send("Upload");
 export const deleteVideo = (req, res) => res.send("Delete Video");
 
+
+export const getUpload = (req, res) => {
+  return res.render("upload", {pageTitle:"Upload Video", videos})
+}
+export const postUpload = (req, res) => {
+  // here we will add a videl to the videos array
+  console.log(req.body);
+  const { title } = req.body;
+  const newVideo = {
+    title: title,
+    rating: 0, 
+    comments: 0,
+    created: "just now",
+    view: 0,
+    id: videos.length + 1
+  };
+  videos.push(newVideo);
+  return res.redirect("/")
+}
 
 
 
