@@ -15,6 +15,7 @@ const logger = morgan("dev");
 app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");     // 작업 디렉토리를 변경
 app.use(logger);
+app.use(express.urlencoded({ extended: true }));    //express application이 form의 value들을 이해할 수 있도록
 app.use("/", globalRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
