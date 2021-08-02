@@ -1,4 +1,5 @@
 import Video from "../models/video"
+
 /*
 // cllback 방식 
 export const home = (req, res) => {
@@ -28,19 +29,49 @@ export const home = async(req, res) => {
 export const watch = async(req, res) => {
   const { id } = req.params;  //ES6
   const video = await Video.findById(id)
-
+  // 에러체크를 먼저하는 방법 이용 -> 에러 체크후 이상이 없으면 정상적인 화면 랜더링
+  if (!video){
+    return res.render("404", { pageTitle: "Video not found." });
+  }
   return res.render("Watch", {pageTitle: video.title, video: video});   
 }
-export const getEdit = (req, res) => {
+
+
+export const getEdit = async(req, res) => {
 
   const { id } = req.params;  
-  
-  return res.render("edit", {pageTitle: `Editing`});
+  const video = await Video.findById(id)
+
+  if (!video){
+    return res.render("404", { pageTitle: "Video not found." });
+  }
+  return res.render("edit", {pageTitle: `Edit ${video.title}`, video: video});
 }
-export const postEdit = (req, res) => {
+
+
+export const postEdit = async(req, res) => {
   const { id } = req.params;  
-  const { title } = req.body;    // urlencoded 필요!
-  console.log("postEdit ->",title);
+  const { title, description, hashtags } = req.body;  
+  // const video = await Video.findById(id)
+  const video = await Video.exists({_id:id})  //exists 필터를 입력해줌
+
+  if (!video){
+    return res.render("404", { pageTitle: "Video not found." });
+  }
+
+  await Video.findByIdAndUpdate(id, {
+    title, 
+    description, 
+    hashtags: hashtags.split(",").map((word) => word.startsWith('#') ? word : `#${word}`),
+  
+  })
+
+  // video.title = title;
+  // video.description = description
+  // video.hashtags= hashtags.split(",").map((word) => word.startWith('#') ? word : `#${word}`)
+  // await video.save()
+
+  // const { title } = req.body;    // urlencoded 필요!
   return res.redirect(`/videos/${id}`);
 };
 
@@ -83,7 +114,7 @@ export const postUpload = async(req, res) => {
       title: title, 
       description: description,
       // createdAt: Date.now(),
-      hashtags: hashtags.split(",").map((word) => `#${word}`),
+      hashtags: hashtags.split(",").map((word) => word.startsWith('#') ? word : `#${word}`),
       
     });
     // DB에 저장 - await로 기다려주고 save메소드를 이용해서 db에 저장함(mongoose)
