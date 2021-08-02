@@ -25,12 +25,11 @@ export const home = async(req, res) => {
   }
 }
 
-export const watch = (req, res) => {
+export const watch = async(req, res) => {
   const { id } = req.params;  //ES6
-  // const id = req.params.id
+  const video = await Video.findById(id)
 
-
-  return res.render("Watch", {pageTitle: `Watching`});   
+  return res.render("Watch", {pageTitle: video.title, video: video});   
 }
 export const getEdit = (req, res) => {
 
@@ -79,18 +78,21 @@ export const postUpload = async(req, res) => {
   // here we will add a videl to the videos array
   const { title , description, hashtags } = req.body;
   // create 메소드를 이용하면 자바스크립트에서 자동으로 객체를 만들어줌
-  await Video.create({
-    title: title, 
-    description: description,
-    createdAt: Date.now(),
-    hashtags: hashtags.split(",").map((word) => `#${word}`),
-    meta: {
-      views: 0,
-      rating: 0,
-    },
-  });
-  // DB에 저장 - await로 기다려주고 save메소드를 이용해서 db에 저장함(mongoose)
-  return res.redirect("/")
+  try{
+    await Video.create({
+      title: title, 
+      description: description,
+      // createdAt: Date.now(),
+      hashtags: hashtags.split(",").map((word) => `#${word}`),
+      
+    });
+    // DB에 저장 - await로 기다려주고 save메소드를 이용해서 db에 저장함(mongoose)
+    return res.redirect("/")
+    
+  }
+  catch(error){
+    return res.render("upload", {pageTitle:"Upload Video", errorMessage: error._message,})
+  }
 }
 
 
