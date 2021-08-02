@@ -62,7 +62,8 @@ export const postEdit = async(req, res) => {
   await Video.findByIdAndUpdate(id, {
     title, 
     description, 
-    hashtags: hashtags.split(",").map((word) => word.startsWith('#') ? word : `#${word}`),
+    // hashtags: hashtags.split(",").map((word) => word.startsWith('#') ? word : `#${word}`),
+    hashtags: Video.formatHashtags(hashtags),   // video.js에서 내가 static으로 만들어줬기때문에 가능! - import도 필요없지!
   
   })
 
@@ -78,7 +79,9 @@ export const postEdit = async(req, res) => {
 
 export const search = (req, res) => res.send("Search Videos");
 export const upload = (req, res) => res.send("Upload");
-export const deleteVideo = (req, res) => res.send("Delete Video");
+
+
+
 
 
 export const getUpload = (req, res) => {
@@ -114,8 +117,8 @@ export const postUpload = async(req, res) => {
       title: title, 
       description: description,
       // createdAt: Date.now(),
-      hashtags: hashtags.split(",").map((word) => word.startsWith('#') ? word : `#${word}`),
-      
+      // hashtags: hashtags.split(",").map((word) => word.startsWith('#') ? word : `#${word}`),
+      hashtags: Video.formatHashtags(hashtags),
     });
     // DB에 저장 - await로 기다려주고 save메소드를 이용해서 db에 저장함(mongoose)
     return res.redirect("/")
@@ -128,7 +131,12 @@ export const postUpload = async(req, res) => {
 
 
 
-
+export const deleteVideo = async(req, res) => {
+  const { id } = req.params;
+  await Video.findByIdAndDelete(id)
+  
+  return res.redirect("/");
+};
 
 
 
