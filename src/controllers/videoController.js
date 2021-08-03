@@ -18,7 +18,7 @@ export const home = async(req, res) => {
   try{
     // await로 기다려줌 (아래코드에서 db에 데이터를 결과값으로 받을때까지)
     // await는 function 내에서만 사용이 가능한대 해당 function이 asynchronous일때만 가능함! (astnc를 적어줌)
-    const videos = await Video.find({}); 
+    const videos = await Video.find({}).sort({createdAt: "desc"}); 
     return res.render("home", {pageTitle: "Home", videos});
   }
   catch{
@@ -77,8 +77,7 @@ export const postEdit = async(req, res) => {
 };
 
 
-export const search = (req, res) => res.send("Search Videos");
-export const upload = (req, res) => res.send("Upload");
+// export const upload = (req, res) => res.send("Upload");
 
 
 
@@ -139,6 +138,21 @@ export const deleteVideo = async(req, res) => {
 };
 
 
+
+export const search = async(req, res) => {
+  const { keyword } = req.query;
+  
+  let videos = [];
+  if (keyword){
+    videos = await Video.find({
+      title: {
+        $regex: new RegExp(keyword, "i")
+      },
+    })
+  }
+  
+  return res.render("search", {pageTitle:"Search", videos})
+};
 
 
 
