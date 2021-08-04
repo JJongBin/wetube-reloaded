@@ -8,14 +8,14 @@ export const postJoin = async(req, res) => {
 
     // password 확인
     if (password !== password2) {
-        return res.render("join", {pageTitle, errorMessage: "Password confirmation does not match."})
+        return res.status(400).render("join", {pageTitle, errorMessage: "Password confirmation does not match."})
     }
 
     //user name, email 중복검사
     const usernameExists = await User.exists( { $or: [{username}, {email}] } );
     // $or -> 하나에 해당되더라도 or 과 같음
     if (usernameExists) {
-        return res.render("join", {pageTitle, errorMessage: "This username/email is already taken."})
+        return res.status(400).render("join", {pageTitle, errorMessage: "This username/email is already taken."})
     }
 
     await User.create({

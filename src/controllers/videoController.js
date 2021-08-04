@@ -31,7 +31,7 @@ export const watch = async(req, res) => {
   const video = await Video.findById(id)
   // 에러체크를 먼저하는 방법 이용 -> 에러 체크후 이상이 없으면 정상적인 화면 랜더링
   if (!video){
-    return res.render("404", { pageTitle: "Video not found." });
+    return res.status(404).render("404", { pageTitle: "Video not found." });
   }
   return res.render("Watch", {pageTitle: video.title, video: video});   
 }
@@ -43,7 +43,7 @@ export const getEdit = async(req, res) => {
   const video = await Video.findById(id)
 
   if (!video){
-    return res.render("404", { pageTitle: "Video not found." });
+    return res.status(404).render("404", { pageTitle: "Video not found." });
   }
   return res.render("edit", {pageTitle: `Edit ${video.title}`, video: video});
 }
@@ -56,7 +56,7 @@ export const postEdit = async(req, res) => {
   const video = await Video.exists({_id:id})  //exists 필터를 입력해줌
 
   if (!video){
-    return res.render("404", { pageTitle: "Video not found." });
+    return res.status(404).render("404", { pageTitle: "Video not found." });
   }
 
   await Video.findByIdAndUpdate(id, {
@@ -124,7 +124,7 @@ export const postUpload = async(req, res) => {
     
   }
   catch(error){
-    return res.render("upload", {pageTitle:"Upload Video", errorMessage: error._message,})
+    return res.status(400).render("upload", {pageTitle:"Upload Video", errorMessage: error._message,})
   }
 }
 
