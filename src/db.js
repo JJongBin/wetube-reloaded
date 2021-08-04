@@ -3,7 +3,8 @@ import mongoose from "mongoose"
 mongoose.connect("mongodb://127.0.0.1:27017/wetube", { 
     useNewUrlParser: true, 
     useUnifiedTopology: true,
-    useFindAndModify: false
+    useFindAndModify: false,
+    useCreateIndex: true,
 });   // 주소 맨뒤에 db 이름을 명시
 
 
