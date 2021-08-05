@@ -1,32 +1,33 @@
 doctype html
 html(lang="ko")
     head    
-        title #{pageTitle} | Wetube
+        title #{pageTitle} | #{siteName}        
+        //- siteName은 local object (server.js - 미들웨어에서 보내줌)
         link(rel="stylesheet", href="https://unpkg.com/mvp.css")
 
     body
         header    
-            //- if fakeUser.loggedIn
-            //- small Hello #{fakeUser.username}
-            //- nav 
-            //-     ul
-            //-         if fakeUser.loggedIn
-            //-             li
-            //-                 a(href="/logout") Log Out
-            //-         else
-            //-             li
-            //-                 a(href="/login") Login
             h1=pageTitle
             nav 
                 ul
                     li
-                        a(href="/videos/upload") Upload Video
-                    li
                         a(href="/") Home
+
+                    if loggedIn
+                        li
+                            a(href="/logout") Log Out
+                        li
+                            a(href="/my-profile") #{loggedInUser.name}의 Profile
+                    else
+                        li
+                            a(href="/join") Join
+                        li
+                            a(href="/Login") Login
+
                     li
                         a(href="/search") Search
                     li
-                        a(href="/join") Join
+                        a(href="/videos/upload") Upload Video
         main
             block content
     include partials/footer
