@@ -24,10 +24,14 @@ app.use(express.urlencoded({ extended: true }));    //express application이 for
 // 우리의 router 앞에서 해줘야함 (session middleware)
 app.use(
     session({
-        secret: "hello",
-        resave: true,
-        saveUninitialized: true,
-        store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/wetube" }),     // 세션이 서버가 아닌 mongoDB에 저장되도록
+        secret: "process.env.COOKIE_SECRET",    // 쿠키에 sign(backend에 쿠키를 줬음을 보여줌) 할때 사용하는 string
+        resave: false,
+        saveUninitialized: false,   // 세션을 수정할(로그인) 때만 DB에 저장하고 쿠키를 넘겨줌(false)  
+        // cookie: {
+        //     maxAge: 20000,  // 쿠키를 얼마동안 유지할지
+        // },
+        store: MongoStore.create({ mongoUrl: process.env.DB_URL }),     // 세션이 서버 메모리가 아닌 mongoDB에 저장되도록 -> 서버를 재시작해도 로그인이 유지
+        // 민감한 정보들은 process.env (환경변수)로 만들어주기! (dotenv 설치)
 }))
 
 app.use(localsMiddleware)
