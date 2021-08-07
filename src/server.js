@@ -2,6 +2,7 @@
 import express from "express";
 import morgan from "morgan";
 import session from "express-session";
+import MongoStore from "connect-mongo";
 
 import rootRouter from "./routers/rootRouter";
 import videoRouter from "./routers/videoRouter";
@@ -26,6 +27,7 @@ app.use(
         secret: "hello",
         resave: true,
         saveUninitialized: true,
+        store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/wetube" }),     // 세션이 서버가 아닌 mongoDB에 저장되도록
 }))
 
 app.use(localsMiddleware)
