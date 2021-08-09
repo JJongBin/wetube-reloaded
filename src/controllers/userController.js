@@ -142,6 +142,7 @@ export const finishGithubLogin = async(req, res) => {
         if(!user){
             // create an account  없으면 계정 생성하도록
             user = await User.create({
+                avataUrl: userData.avatar_url,
                 name: userData.name, 
                 username: userData.login, 
                 email: emailObject.email, 
@@ -159,9 +160,15 @@ export const finishGithubLogin = async(req, res) => {
     }
 }
 
+
+export const logout = (req, res) => {
+    req.session.destroy();  // 세션을 없앰
+    res.redirect("/");
+}
+
+
+
 export const edit = (req, res) => res.send("Edit User");
-export const remove = (req, res) => res.send("Delete User");
-export const logout = (req, res) => res.send("Logout");
 export const see = (req, res) => res.send("See User");
 
 
