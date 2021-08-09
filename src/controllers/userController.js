@@ -167,8 +167,85 @@ export const logout = (req, res) => {
 }
 
 
+export const getEdit = (req, res) => {
+    return res.render("edit-profile", {pageTitle: "Edit Profile"});
+}
+export const postEdit = async(req, res) => {
+    const { 
+        session: {
+            user: {_id}
+        }, 
+        body:{ name, email, username, location } 
+    } = req;
 
-export const edit = (req, res) => res.send("Edit User");
+    const updateUder = await User.findByIdAndUpdate(
+        _id, 
+        {
+            name, 
+            email, 
+            username, 
+            location, 
+        },
+        { new: true }   // 옵션 
+    );
+    req.session.user = updateUser;
+
+    // // 직접 세션 초기화(업데이트)하는 방법
+    // req.session.user = {
+    //     ...req.session.user,
+    //     name, 
+    //     email, 
+    //     username, 
+    //     location, 
+    // }
+    return res.redirect("/users/edit");
+}
+
+
+
+export const getChangePassword = (req, res) => {
+    if (req.session.user.socialOnly === true) {
+        return res.redirect("/");
+    }
+    
+    return res.render("change-password", {pageTitle:"Change Password"});
+}
+export const postChangePassword = async (req, res) => {
+    const { 
+        session: {
+            user: {_id, password}
+        }, 
+        body:{ oldPassword, newPassword, newPassword2 } 
+    } = req;
+    
+    const ok = await bcrypt.compare(oldPassword, password);
+
+    // 변경하려는 비밀번호가 일치하지 않음
+    if (newPassword !== newPassword2){
+        return res.status(400).render("change-password", {pageTitle:"Change Password", errorMessage:"The password does not match the confirmation"});
+    };
+
+    // 입력한 기존의 비밀번호가 일치하지 않음
+    if (!ok){
+        return res.status(400).render("change-password", {pageTitle:"The current password is incorrect"});
+    }
+
+    //비밀번호를 변경하려는 유저찾기
+    const user = await User.findById(_id);
+    user.password = newPassword;
+
+    await user.save();
+    
+    // session update
+    req.session.user.password = user.password;
+
+
+    // send notification 
+    return res.redirect("/users/logout");
+
+}
+
+
 export const see = (req, res) => res.send("See User");
 
 

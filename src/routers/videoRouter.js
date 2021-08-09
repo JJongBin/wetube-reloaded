@@ -1,5 +1,6 @@
 import express from "express";
 import { upload, watch, getEdit, postEdit, deleteVideo, getUpload, postUpload } from "../controllers/videoController"
+import { protectorMiddleware } from "../middlewares";
 const videoRouter = express.Router();
 
 // const handleWatch = (req, res) => res.send("Watch Video")
@@ -13,11 +14,11 @@ const videoRouter = express.Router();
 videoRouter.get("/:id([0-9a-f]{24})", watch)
 // videoRouter.get("/:id(\\d+)/edit", getEdit)
 // videoRouter.post("/:id(\\d+)/edit", postEdit)
-videoRouter.route("/:id([0-9a-f]{24})/edit").get(getEdit).post(postEdit); // 주석 처리된 위 get. post를 한번에 할 수 있음
-videoRouter.route("/:id([0-9a-f]{24})/delete").get(deleteVideo)
+videoRouter.route("/:id([0-9a-f]{24})/edit").all(protectorMiddleware).get(getEdit).post(postEdit); // 주석 처리된 위 get. post를 한번에 할 수 있음
+videoRouter.route("/:id([0-9a-f]{24})/delete").all(protectorMiddleware).get(deleteVideo)
 // videoRouter.get("/:id(\\d+)/dlelte", deleteVideo)
 // videoRouter.get("/upload", upload)
-videoRouter.route("/upload").get(getUpload).post(postUpload); 
+videoRouter.route("/upload").all(protectorMiddleware).get(getUpload).post(postUpload); 
 
 
 export default videoRouter;
