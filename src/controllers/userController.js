@@ -45,7 +45,7 @@ export const getLogin = (req, res) => {
 export const postLogin = async(req, res) => {
     const { username, password } = req.body;
     const pageTitle = "Login"
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username, socialOnly: false });
 
     if(!user){
         res.status(400).render("login", {pageTitle, errorMessage:"An account with this username does not exists."})
@@ -90,6 +90,8 @@ export const finishGithubLogin = async(req, res) => {
 
     const params = new URLSearchParams(config).toString();
     const finalUrl = `${baseUrl}?${params}`;
+
+
     const tokenRequest = await (
         await fetch(finalUrl, {
             method:"POST",
@@ -98,21 +100,60 @@ export const finishGithubLogin = async(req, res) => {
             }
         })
     ).json();
-    console.log(tokenRequest);
+    // console.log(tokenRequest);
     // res.render(JSON.stringify(json));
 
     if("access_token" in tokenRequest){
         const { access_token } = tokenRequest;
-        console.log(access_token)
-        const userRequest = await (
-            await fetch("https://api.github.com/user", {
+        // console.log(access_token)
+        
+        const apiUrl = "https://api.github.com"
+        
+        const userData = await (
+            await fetch(`${apiUrl}/user`, {
                 headers: {
                     Authorization: `token ${access_token}`,
                 }
             })
         ).json();
 
-        console.log(userRequest);
+        console.log(userData);
+        
+        const emailData = await (
+            await fetch(`${apiUrl}/user/emails`, {
+                headers: {
+                    Authorization: `token ${access_token}`,
+                }
+            })
+        ).json();
+            
+        console.log(emailData);
+
+        const emailObject = emailData.find(
+            (email) => email.primary ===true && email.verified === true     // github에서 준 email 리스트에서 primary이고, verified인것을 찾는다(존재여부)
+        );
+        console.log(emailObject.email)
+
+        if(!emailObject){     // 없으면 로그인 페이지로 이동
+            return res.redirect("/login")
+        }
+        let user = await User.findOne({email: emailObject.email});    // 있으면 
+        console.log(user)
+        if(!user){
+            // create an account  없으면 계정 생성하도록
+            user = await User.create({
+                name: userData.name, 
+                username: userData.login, 
+                email: emailObject.email, 
+                password: "", 
+                socialOnly: true,
+                location: userData.location,
+            });
+        } 
+        req.session.loggedIn = true;
+        req.session.user = user;
+        return res.redirect("/")
+
     }else{
         return res.redirect("/login");
     }
