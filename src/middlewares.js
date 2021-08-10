@@ -1,3 +1,5 @@
+import multer from "multer";
+
 export const localsMiddleware = (req, res, next) => {
     
     // 현재 로그인된 유저를 알려준다
@@ -25,4 +27,7 @@ export const publicOnlyMiddleware = (req, res, next) => {
     } else {
         return res.redirect("/")
     }
-}
+};
+
+
+export const uploadFile = multer({ dest: "uploads/" });      // 사용자가 보낼 파일을 uploads 폴더에 저장

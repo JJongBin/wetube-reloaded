@@ -2,6 +2,7 @@ import User from "../models/User";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 
+
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
 export const postJoin = async(req, res) => {
     // console.log(req.body);
@@ -142,7 +143,7 @@ export const finishGithubLogin = async(req, res) => {
         if(!user){
             // create an account  없으면 계정 생성하도록
             user = await User.create({
-                avataUrl: userData.avatar_url,
+                avatarUrl: userData.avatar_url,
                 name: userData.name, 
                 username: userData.login, 
                 email: emailObject.email, 
@@ -151,6 +152,7 @@ export const finishGithubLogin = async(req, res) => {
                 location: userData.location,
             });
         } 
+        console.log(userData)
         req.session.loggedIn = true;
         req.session.user = user;
         return res.redirect("/")
@@ -173,14 +175,19 @@ export const getEdit = (req, res) => {
 export const postEdit = async(req, res) => {
     const { 
         session: {
-            user: {_id}
+            user: {_id, avatarUrl}
         }, 
-        body:{ name, email, username, location } 
+        body:{ name, email, username, location },
+        file
     } = req;
 
-    const updateUder = await User.findByIdAndUpdate(
+
+    console.log(file)
+
+    const updateUser = await User.findByIdAndUpdate(
         _id, 
         {
+            avatarUrl: file ? file.path :avatarUrl,
             name, 
             email, 
             username, 
