@@ -1,4 +1,5 @@
 import Video from "../models/video"
+import User from "../models/User"
 
 /*
 // cllback 방식 
@@ -28,12 +29,13 @@ export const home = async(req, res) => {
 
 export const watch = async(req, res) => {
   const { id } = req.params;  //ES6
-  const video = await Video.findById(id)
+  // populate는 실제 데이터로 채워줌(model에서 ref로 정의해줬음)
+  const video = await Video.findById(id).populate("owner");
   // 에러체크를 먼저하는 방법 이용 -> 에러 체크후 이상이 없으면 정상적인 화면 랜더링
   if (!video){
     return res.status(404).render("404", { pageTitle: "Video not found." });
   }
-  return res.render("Watch", {pageTitle: video.title, video: video});   
+  return res.render("Watch", {pageTitle: video.title, video, });   
 }
 
 
@@ -108,8 +110,9 @@ export const postUpload = async(req, res) => {
 */
 
 export const postUpload = async(req, res) => {
+  const { user:{ _id } } = req.session;
+  
   const { path:fileUrl } = req.file;
-
 
   // here we will add a videl to the videos array
   const { title , description, hashtags } = req.body;
@@ -119,6 +122,7 @@ export const postUpload = async(req, res) => {
       title: title, 
       description: description,
       fileUrl,
+      owner: _id,
       // createdAt: Date.now(),
       // hashtags: hashtags.split(",").map((word) => word.startsWith('#') ? word : `#${word}`),
       hashtags: Video.formatHashtags(hashtags),
