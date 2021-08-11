@@ -43,9 +43,15 @@ export const getEdit = async(req, res) => {
 
   const { id } = req.params;  
   const video = await Video.findById(id)
+  const { user:{_id} } = req.session;
 
   if (!video){
     return res.status(404).render("404", { pageTitle: "Video not found." });
+  }
+  
+  // 동영상 게시자만 수정페이지에 접근가능
+  if(String(video.owner) !== String(_id)){
+    return res.status(403).redirect("/");
   }
   return res.render("edit", {pageTitle: `Edit ${video.title}`, video: video});
 }
@@ -56,11 +62,16 @@ export const postEdit = async(req, res) => {
   const { title, description, hashtags } = req.body;  
   // const video = await Video.findById(id)
   const video = await Video.exists({_id:id})  //exists 필터를 입력해줌
+  const { user:{_id} } = req.session;
 
   if (!video){
     return res.status(404).render("404", { pageTitle: "Video not found." });
   }
 
+  if(String(video.owner) !== String(_id)){
+    return res.status(403).redirect("/");
+  }
+  
   await Video.findByIdAndUpdate(id, {
     title, 
     description, 
@@ -118,7 +129,7 @@ export const postUpload = async(req, res) => {
   const { title , description, hashtags } = req.body;
   // create 메소드를 이용하면 자바스크립트에서 자동으로 객체를 만들어줌
   try{
-    await Video.create({
+    const newVideo = await Video.create({
       title: title, 
       description: description,
       fileUrl,
@@ -127,6 +138,10 @@ export const postUpload = async(req, res) => {
       // hashtags: hashtags.split(",").map((word) => word.startsWith('#') ? word : `#${word}`),
       hashtags: Video.formatHashtags(hashtags),
     });
+    const user = await User.findById(_id);
+    user.videos.push(newVideo._id);
+    user.save();
+
     // DB에 저장 - await로 기다려주고 save메소드를 이용해서 db에 저장함(mongoose)
     return res.redirect("/")
     
@@ -140,6 +155,16 @@ export const postUpload = async(req, res) => {
 
 export const deleteVideo = async(req, res) => {
   const { id } = req.params;
+  const { user:{_id} } = req.session;
+  const video = await Video.findById(id);
+  
+  if(!video){
+    return res.status(404).render("404", { pageTitle: "Video not found." });
+  }
+
+  if(String(video.owner) !== String(_id)){
+    return res.status(403).redirect("/");
+  }
   await Video.findByIdAndDelete(id)
   
   return res.redirect("/");
