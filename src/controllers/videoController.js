@@ -19,7 +19,7 @@ export const home = async(req, res) => {
   try{
     // await로 기다려줌 (아래코드에서 db에 데이터를 결과값으로 받을때까지)
     // await는 function 내에서만 사용이 가능한대 해당 function이 asynchronous일때만 가능함! (astnc를 적어줌)
-    const videos = await Video.find({}).sort({createdAt: "desc"}); 
+    const videos = await Video.find({}).sort({createdAt: "desc"}).populate("owner"); 
     return res.render("home", {pageTitle: "Home", videos});
   }
   catch{
