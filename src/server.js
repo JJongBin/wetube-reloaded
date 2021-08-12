@@ -36,6 +36,7 @@ app.use(
 
 app.use(localsMiddleware)
 app.use("/uploads", express.static("uploads"))       //폴더 노출
+app.use("/static", express.static("assets"))       //폴더 노출
 
 app.use("/", rootRouter);
 app.use("/videos", videoRouter);

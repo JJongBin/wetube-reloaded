@@ -4,6 +4,7 @@ html(lang="ko")
         title #{pageTitle} | #{siteName}        
         //- siteName은 local object (server.js - 미들웨어에서 보내줌)
         link(rel="stylesheet", href="https://unpkg.com/mvp.css")
+        link(rel="stylesheet", href="/static/css/style.css")
 
     body
         header    
@@ -35,3 +36,4 @@ html(lang="ko")
         main
             block content
     include partials/footer
+    script(src="/static/js/main.js")
