@@ -5,6 +5,7 @@ const path = require("path");
 module.exports = {
     entry: "./src/client/js/main.js",
     mode: "development",
+    watch: true,        // js css 수정하면 자동으로 
     plugins: [
         new MiniCssExtractPlugin({
             filename: "css/style.css"       // js와 분리해서 저장
@@ -13,6 +14,7 @@ module.exports = {
     output: {
         filename: "js/main.js",
         path: path.resolve(__dirname, "assets"),        // 기본적으로 assets에 저장
+        clean: true,        // output folder를 build 시작하기전에 clean
     },
     module: {
         rules: [
