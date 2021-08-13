@@ -28,6 +28,22 @@ header {
         padding: 5px 10px;
         border-radius: 5px;
     }
-
+    .header__user {
+        // margin-left: 20px;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        .header__avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        // .header__username {
+        //     padding-left: 5px;
+        //     display: flex;
+        //     justify-content: center;
+        //     align-items: center;
+        // }
+    }
 
 }

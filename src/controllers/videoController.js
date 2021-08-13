@@ -20,6 +20,7 @@ export const home = async(req, res) => {
     // await로 기다려줌 (아래코드에서 db에 데이터를 결과값으로 받을때까지)
     // await는 function 내에서만 사용이 가능한대 해당 function이 asynchronous일때만 가능함! (astnc를 적어줌)
     const videos = await Video.find({}).sort({createdAt: "desc"}).populate("owner"); 
+    console.log(videos);
     return res.render("home", {pageTitle: "Home", videos});
   }
   catch{
@@ -35,6 +36,7 @@ export const watch = async(req, res) => {
   if (!video){
     return res.status(404).render("404", { pageTitle: "Video not found." });
   }
+  // console.log(video)
   return res.render("Watch", {pageTitle: video.title, video, });   
 }
 
@@ -42,7 +44,7 @@ export const watch = async(req, res) => {
 export const getEdit = async(req, res) => {
 
   const { id } = req.params;  
-  const video = await Video.findById(id)
+  const video = await Video.findById(id).populate("owner")
   const { user:{_id} } = req.session;
 
   if (!video){
@@ -179,7 +181,7 @@ export const search = async(req, res) => {
   if (keyword){
     videos = await Video.find({
       title: {
-        $regex: new RegExp(keyword, "i")  // 포함하면 검색이 되도록
+        $regex: new RegExp(`${keyword}$`, "i")  // 포함하면 검색이 되도록
       },
     }).populate("owner");
   }

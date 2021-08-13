@@ -5,7 +5,7 @@ block content
         span=errorMessage
     form(method="POST" action="/videos/upload", enctype="multipart/form-data")      
         //- action은 없어도됨 쓰여있는값이 default
-        label(for="video") Video File
+        label(for="video").video-upload__label Video File
         input(type="file", accept="video/*", required, id="video", name="video")
         input(name="title", placeholder="Title", required, type="text", maxLength=80)
         input(name="description", placeholder="Description", required, type="text", minLength=20)
