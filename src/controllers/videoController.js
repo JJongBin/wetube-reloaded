@@ -181,7 +181,7 @@ export const search = async(req, res) => {
       title: {
         $regex: new RegExp(keyword, "i")  // 포함하면 검색이 되도록
       },
-    })
+    }).populate("owner");
   }
   
   return res.render("search", {pageTitle:"Search", videos})
