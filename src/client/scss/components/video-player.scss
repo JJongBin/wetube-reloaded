@@ -1,0 +1,97 @@
+#videoContainer {
+    width: 100%;
+    position: relative;
+
+    video {
+        width: 100%;
+    }
+    i {
+        cursor: pointer;
+    }
+    .videoControls {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        &.showing {
+            opacity: 1;
+        }
+        align-items: center;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: .7fr 4fr .8fr auto;
+        gap: 10px;
+        justify-content: space-between;
+        background-color: rgba(0, 0, 0, 0.3);
+        padding: 10px;
+        padding: 20px 10px;
+        left: 0;
+        box-sizing: border-box;
+
+        .videoControls__play {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            .videoControls__playBtn {
+                margin: 0px 15px;
+                &:hover {
+                    text-shadow: #fff 0 0 20px ;
+                }
+            }
+            .videoControls__time {
+                font-size: 12px;
+            }
+        }
+        .videoControls__volume {
+            display: flex;
+            align-items: center;
+            span {
+                margin-left: 10px;
+                i {
+                    font-size: 20px;
+                    &:hover {
+                        text-shadow: #fff 0 0 20px ;
+                    }
+                }
+            }
+        }
+        .fullScreen__icon {
+            span{
+                i {
+                    padding: 0 10px;
+                    &:hover {
+                        text-shadow: #fff 0 0 20px ;
+                    }
+                }
+            }
+        
+        }
+    }
+}
+
+#timeline {
+    width:100%; 
+    -webkit-appearance: none; 
+    background: transparent;
+
+    cursor: pointer;
+    background-color: #fff;
+    height: 5px;
+    border-radius: 2px;
+
+    &::-webkit-slider-thumb{
+        -webkit-appearance: none;
+        background-color: #fff;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        transition: all .5s;
+    }
+    &:hover{
+        &::-webkit-slider-thumb{
+        }
+    }
+}

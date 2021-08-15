@@ -211,6 +211,90 @@ input[type=submit]:hover,
   transition: all 0.4s;
 }
 
+#videoContainer {
+  width: 100%;
+  position: relative;
+}
+#videoContainer video {
+  width: 100%;
+}
+#videoContainer i {
+  cursor: pointer;
+}
+#videoContainer .videoControls {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.7fr 4fr 0.8fr auto;
+  gap: 10px;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  padding: 20px 10px;
+  left: 0;
+  box-sizing: border-box;
+}
+#videoContainer .videoControls.showing {
+  opacity: 1;
+}
+#videoContainer .videoControls .videoControls__play {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+#videoContainer .videoControls .videoControls__play .videoControls__playBtn {
+  margin: 0px 15px;
+}
+#videoContainer .videoControls .videoControls__play .videoControls__playBtn:hover {
+  text-shadow: #fff 0 0 20px;
+}
+#videoContainer .videoControls .videoControls__play .videoControls__time {
+  font-size: 12px;
+}
+#videoContainer .videoControls .videoControls__volume {
+  display: flex;
+  align-items: center;
+}
+#videoContainer .videoControls .videoControls__volume span {
+  margin-left: 10px;
+}
+#videoContainer .videoControls .videoControls__volume span i {
+  font-size: 20px;
+}
+#videoContainer .videoControls .videoControls__volume span i:hover {
+  text-shadow: #fff 0 0 20px;
+}
+#videoContainer .videoControls .fullScreen__icon span i {
+  padding: 0 10px;
+}
+#videoContainer .videoControls .fullScreen__icon span i:hover {
+  text-shadow: #fff 0 0 20px;
+}
+
+#timeline {
+  width: 100%;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+  background-color: #fff;
+  height: 5px;
+  border-radius: 2px;
+}
+#timeline::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background-color: #fff;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  transition: all 0.5s;
+}
 .search__form {
   margin-bottom: 60px;
   display: flex;
