@@ -232,7 +232,7 @@ input[type=submit]:hover,
   right: 0;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 0.7fr 4fr 0.8fr auto;
+  grid-template-columns: 1fr 3.7fr 0.8fr auto;
   gap: 10px;
   justify-content: space-between;
   background-color: rgba(0, 0, 0, 0.3);
@@ -295,6 +295,7 @@ input[type=submit]:hover,
   border-radius: 50%;
   transition: all 0.5s;
 }
+
 .search__form {
   margin-bottom: 60px;
   display: flex;
