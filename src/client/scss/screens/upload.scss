@@ -1,0 +1,43 @@
+#recordBtn {
+    width: 420px;
+    margin: 30px auto;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+     
+    &:hover {
+        color: $red;
+    }
+}
+#recordBox-open {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+#recordBox {
+    // background-color: rgba($color: #000000, $alpha: 0.5);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    #preview {
+        padding: 10px 100px;
+        // padding-bottom: 10px;
+    }
+    #actionBtn {
+        width: 420px;
+        margin: 30px auto;
+        margin-bottom: 0;
+        padding: 10px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+
+        &:hover {
+            color: $red;
+        }
+    }
+}

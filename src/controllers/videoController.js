@@ -125,7 +125,7 @@ export const postUpload = async(req, res) => {
 export const postUpload = async(req, res) => {
   const { user:{ _id } } = req.session;
   
-  const { path:fileUrl } = req.file;
+  const { video, thumb } = req.files;
 
   // here we will add a videl to the videos array
   const { title , description, hashtags } = req.body;
@@ -134,7 +134,8 @@ export const postUpload = async(req, res) => {
     const newVideo = await Video.create({
       title: title, 
       description: description,
-      fileUrl,
+      fileUrl: video[0].path,
+      thumbUrl: thumb[0].path,
       owner: _id,
       // createdAt: Date.now(),
       // hashtags: hashtags.split(",").map((word) => word.startsWith('#') ? word : `#${word}`),

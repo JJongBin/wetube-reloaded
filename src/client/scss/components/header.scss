@@ -27,6 +27,11 @@ header {
         color: $bg;
         padding: 5px 10px;
         border-radius: 5px;
+        transition: all .3s;
+
+        &:hover {
+            color: $red;
+        }
     }
     .header__user {
         // margin-left: 20px;

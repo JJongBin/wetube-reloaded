@@ -18,7 +18,11 @@ videoRouter.route("/:id([0-9a-f]{24})/edit").all(protectorMiddleware).get(getEdi
 videoRouter.route("/:id([0-9a-f]{24})/delete").all(protectorMiddleware).get(deleteVideo)
 // videoRouter.get("/:id(\\d+)/dlelte", deleteVideo)
 // videoRouter.get("/upload", upload)
-videoRouter.route("/upload").all(protectorMiddleware).get(getUpload).post(videoUpload.single("video"), postUpload); 
+videoRouter.route("/upload").all(protectorMiddleware).get(getUpload).post(
+    videoUpload.fields([
+        { name: "video", maxCount:1 },
+        { name: "thumb", maxCount:1 },
+    ]), postUpload); 
 
 
 export default videoRouter;

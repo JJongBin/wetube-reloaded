@@ -21,24 +21,31 @@ input:not(input[type="range"]){
     &::placeholder {
         color: rgba(255, 255, 255, .7);
     }
+    #file-upload-button {
+        color: aqua;
+    }
 }
 
-input[type="submit"],
+form input[type="submit"],
 .social__btn {
+    color: #191919;
     border-radius: 5px;
     margin-top: 10px;
     padding: 12px 20px;
-    background-color: rgba($color: $red, $alpha: .9);
+    // background-color: rgba($color: $red, $alpha: .9);
+    background-color: #fff;
     text-align: center;
+    font-weight: 600;
     cursor: pointer;
     display: block;
     
     &:hover {
-        background-color: azure;
         color: rgba($color: $red, $alpha: .9);
-        font-weight: 600;
         transition: all .4s;
     }
+}
+form input[type="submit"] {
+    margin-top: 30px;
 }
 .video-upload__label {
     font-size: 14px;

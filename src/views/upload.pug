@@ -1,15 +1,22 @@
 extends base
 
 block content
-    div 
-        video#preview
-        button#startBtn Start Recording
+    //- div.recordBox
+    div#recordBox
+        div#recordBox-open.hide
+            video#preview
+            button#actionBtn Start Recording
+        button#recordBtn Open Recording
     if errorMessage
         span=errorMessage
     form(method="POST" action="/videos/upload", enctype="multipart/form-data")      
         //- action은 없어도됨 쓰여있는값이 default
         label(for="video").video-upload__label Video File
+        //- label(for="file").video-upload__button 파일 선택
         input(type="file", accept="video/*", required, id="video", name="video")
+        label(for="thumb").video-upload__label Thumbnail File
+        //- label(for="file").video-upload__button 파일 선택
+        input(type="file", accept="iamge/*", required, id="thumb", name="thumb")
         input(name="title", placeholder="Title", required, type="text", maxLength=80)
         input(name="description", placeholder="Description", required, type="text", minLength=20)
         input(name="hashtags", placeholder="Hashtags separated by comma.", required, type="text")
