@@ -53,6 +53,7 @@ export const getEdit = async(req, res) => {
   
   // 동영상 게시자만 수정페이지에 접근가능
   if(String(video.owner) !== String(_id)){
+    req.flash("error", "Not authorized")
     return res.status(403).redirect("/");
   }
   return res.render("edit", {pageTitle: `Edit ${video.title}`, video: video});
@@ -71,6 +72,7 @@ export const postEdit = async(req, res) => {
   }
 
   if(String(video.owner) !== String(_id)){
+    req.flash("error", "You are not the owner of the video")
     return res.status(403).redirect("/");
   }
   
@@ -88,6 +90,7 @@ export const postEdit = async(req, res) => {
   // await video.save()
 
   // const { title } = req.body;    // urlencoded 필요!
+  req.flash("success", "Changes saved")
   return res.redirect(`/videos/${id}`);
 };
 

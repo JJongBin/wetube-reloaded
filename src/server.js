@@ -2,6 +2,7 @@
 import express from "express";
 import morgan from "morgan";
 import session from "express-session";
+import flash from "express-flash";
 import MongoStore from "connect-mongo";
 
 import rootRouter from "./routers/rootRouter";
@@ -35,6 +36,7 @@ app.use(
         // 민감한 정보들은 process.env (환경변수)로 만들어주기! (dotenv 설치)
 }))
 
+app.use(flash())        // flash 미들웨어는 messages라고 하는 locals를 사용할 수 있게함
 app.use(localsMiddleware)
 app.use("/uploads", express.static("uploads"))       //폴더 노출
 app.use("/static", express.static("assets"))       //폴더 노출

@@ -121,7 +121,7 @@ export const finishGithubLogin = async(req, res) => {
             })
         ).json();
 
-        console.log(userData);
+        // console.log(userData);
         
         const emailData = await (
             await fetch(`${apiUrl}/user/emails`, {
@@ -131,12 +131,12 @@ export const finishGithubLogin = async(req, res) => {
             })
         ).json();
             
-        console.log(emailData);
+        // console.log(emailData);
 
         const emailObject = emailData.find(
             (email) => email.primary ===true && email.verified === true     // github에서 준 email 리스트에서 primary이고, verified인것을 찾는다(존재여부)
         );
-        console.log(emailObject.email)
+        // console.log(emailObject.email)
 
         if(!emailObject){     // 없으면 로그인 페이지로 이동
             return res.redirect("/login")
@@ -168,6 +168,7 @@ export const finishGithubLogin = async(req, res) => {
 
 export const logout = (req, res) => {
     req.session.destroy();  // 세션을 없앰
+    req.flash("info", "Bye Bye")
     res.redirect("/");
 }
 
@@ -215,6 +216,7 @@ export const postEdit = async(req, res) => {
 
 export const getChangePassword = (req, res) => {
     if (req.session.user.socialOnly === true) {
+        req.flash("error", "Can't change password")
         return res.redirect("/");
     }
     
@@ -245,7 +247,8 @@ export const postChangePassword = async (req, res) => {
     user.password = newPassword;
 
     await user.save();
-    
+    req.flash("info", "Password updated")
+
     // session update
     req.session.user.password = user.password;
 
