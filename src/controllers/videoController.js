@@ -1,5 +1,6 @@
 import Video from "../models/video"
 import User from "../models/User"
+import Comment from "../models/Comment"
 
 /*
 // cllback 방식 
@@ -206,3 +207,20 @@ export const registerView = async (req, res) => {
   }
 }
 
+export const createComment = async (req, res) => {
+  const {session: {user}, body: {text}, params: {id}} = req;
+
+  const video = await Video.findById(id);
+
+  if (!video) {
+    return res.sendStatus(404);
+  }
+  const comment = await Comment.create({
+    text,
+    owner: user._id,
+    video: id,
+
+  })
+
+  return res.sendStatus(201);
+}

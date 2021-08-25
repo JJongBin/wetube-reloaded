@@ -22,6 +22,7 @@ app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");     // 작업 디렉토리를 변경
 app.use(logger);
 app.use(express.urlencoded({ extended: true }));    //express application이 form의 value들을 이해할 수 있도록
+app.use(express.json());    //express application이 object를 이해하도록
 
 // 우리의 router 앞에서 해줘야함 (session middleware)
 app.use(

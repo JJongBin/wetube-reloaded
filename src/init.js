@@ -3,6 +3,7 @@ import "dotenv/config"      // 이 방식은 전체에 적용
 import "./db";
 import "./models/video"
 import "./models/User"
+import "./models/Comment"
 import app from "./server";
 
 const PORT = 4000
