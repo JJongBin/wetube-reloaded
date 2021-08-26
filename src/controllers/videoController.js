@@ -246,17 +246,29 @@ export const createComment = async (req, res) => {
   return res.status(201).json({ newCommentId: comment._id });
 };
 
-// export const deleteComment = async (req, res) => {
-//   const { user:{_id} } = req.session;
-//   const { id } = body.params;
-//   const video = await Video.findById(id);
-//   await Comment.findByIdAndDelete(id)
+export const deleteComment = async (req, res) => {
+  const { user:{_id} } = req.session;
+  const {
+    body: { videoId },
+    params: { id },
+  } = req;
+  console.log(_id)
+  console.log(videoId)
+  console.log(id)
 
-//   if (String(_id) !== String(video.owner)) {
-//     return res.sendStatus(404);
-//   };
+  const commentOwner = await User.findById(_id);
+  const video = await Video.findById(videoId);
+  const comment = await Comment.findById(id)
+  if (String(_id) !== String(comment.owner)) {
+    return res.sendStatus(404);
+  };
 
-//   video.splice(video.indexOf(id),1);
-//   video.save()
-//   return res.status(201).json({ deleteCommentId: comment._id });
-// }
+  commentOwner.comments.splice(commentOwner.comments.indexOf(id),1);
+  commentOwner.save();
+  video.comments.splice(video.comments.indexOf(id),1);
+  video.save();
+
+  await Comment.findByIdAndDelete(id)
+
+  return res.status(201).json({ deleteCommentId: comment._id });
+}
