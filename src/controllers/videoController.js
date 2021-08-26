@@ -32,7 +32,7 @@ export const home = async(req, res) => {
 export const watch = async(req, res) => {
   const { id } = req.params;  //ES6
   // populate는 실제 데이터로 채워줌(model에서 ref로 정의해줬음)
-  const video = await Video.findById(id).populate("owner");
+  const video = await Video.findById(id).populate("owner").populate("comments");
   // 에러체크를 먼저하는 방법 이용 -> 에러 체크후 이상이 없으면 정상적인 화면 랜더링
   if (!video){
     return res.status(404).render("404", { pageTitle: "Video not found." });
@@ -207,11 +207,32 @@ export const registerView = async (req, res) => {
   }
 }
 
+// export const createComment = async (req, res) => {
+//   const {session: {user}, body: {text}, params: {id}} = req;
+
+//   const video = await Video.findById(id);
+
+//   if (!video) {
+//     return res.sendStatus(404);
+//   }
+//   const comment = await Comment.create({
+//     text,
+//     owner: user._id,
+//     video: id,
+//   })
+//   video.comments.push(comment._id);
+//   video.save();
+//   console.log(video);
+//   return res.status(201).json({ newCommentId: comment._id });
+// }
+
 export const createComment = async (req, res) => {
-  const {session: {user}, body: {text}, params: {id}} = req;
-
+  const {
+    session: { user },
+    body: { text },
+    params: { id },
+  } = req;
   const video = await Video.findById(id);
-
   if (!video) {
     return res.sendStatus(404);
   }
@@ -219,8 +240,23 @@ export const createComment = async (req, res) => {
     text,
     owner: user._id,
     video: id,
+  });
+  video.comments.push(comment._id);
+  video.save();
+  return res.status(201).json({ newCommentId: comment._id });
+};
 
-  })
+// export const deleteComment = async (req, res) => {
+//   const { user:{_id} } = req.session;
+//   const { id } = body.params;
+//   const video = await Video.findById(id);
+//   await Comment.findByIdAndDelete(id)
 
-  return res.sendStatus(201);
-}
+//   if (String(_id) !== String(video.owner)) {
+//     return res.sendStatus(404);
+//   };
+
+//   video.splice(video.indexOf(id),1);
+//   video.save()
+//   return res.status(201).json({ deleteCommentId: comment._id });
+// }
