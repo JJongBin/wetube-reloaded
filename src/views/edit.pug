@@ -5,7 +5,10 @@ block content
     h4 Update Video
     form(method="POST")
         //- name을 지정해야 컨트롤러에서 req.body로 데이터를 볼 수 있음
+        label(for="title").edit-label Title
         input(name="title", placeholder="Video Title", value=video.title, required)
+        label(for="description").edit-label Description
         input(name="description", placeholder="Description", value=video.description, required, type="text", minLength=20)
+        label(for="hashtags").edit-label Hash Tags
         input(name="hashtags", placeholder="Hashtags separated by comma.", value=video.hashtags.join(), required, type="text")
         input(value="Save", type="submit")

@@ -5,6 +5,13 @@ form {
     background-color: rgba($color: #000000, $alpha: 0.5);
     border-radius: 10px;
     border: 1px solid rgba($color: #fff, $alpha: .2);
+    
+    .edit-label{
+        font-size: 14px;
+        display: block;
+        padding: 15px 0;
+        padding-bottom: 7px;
+    }
 }
 
 input:not(input[type="range"]){
@@ -24,6 +31,7 @@ input:not(input[type="range"]){
     #file-upload-button {
         color: aqua;
     }
+    
 }
 
 form input[type="submit"],

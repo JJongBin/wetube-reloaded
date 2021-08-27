@@ -209,24 +209,7 @@ export const registerView = async (req, res) => {
   }
 }
 
-// export const createComment = async (req, res) => {
-//   const {session: {user}, body: {text}, params: {id}} = req;
 
-//   const video = await Video.findById(id);
-
-//   if (!video) {
-//     return res.sendStatus(404);
-//   }
-//   const comment = await Comment.create({
-//     text,
-//     owner: user._id,
-//     video: id,
-//   })
-//   video.comments.push(comment._id);
-//   video.save();
-//   console.log(video);
-//   return res.status(201).json({ newCommentId: comment._id });
-// }
 
 export const createComment = async (req, res) => {
   const {
@@ -241,8 +224,11 @@ export const createComment = async (req, res) => {
   const comment = await Comment.create({
     text,
     owner: user._id,
+    owner_name: user.name,
     video: id,
   });
+  console.log(comment);
+  console.log(user.name)
   video.comments.push(comment._id);
   video.save();
   return res.status(201).json({ newCommentId: comment._id });

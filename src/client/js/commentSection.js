@@ -6,21 +6,52 @@ const deleteBtn = document.querySelectorAll(".deleteCommentBtn");
 // const btn = form.querySelector("button");
 
 const addComment = (text, id) => {
+    // const date = new Date();
     const videoComments = document.querySelector(".video__comments ul");
     const newComment = document.createElement("li");
     newComment.dataset.id = id;
     newComment.className = "video__comment";
+
+    
+    const commentUser = document.createElement("div");
+    commentUser.className = "comment-user";
+    
+    const ownerName = document.createElement("span");
+    ownerName.innerText = "###";
+    const commentDate = document.createElement("span");
+    commentDate.className = "comment-date";
+    commentDate.innerText = new Date().toLocaleDateString("ko-kr", {year: 'numeric', month: 'numeric', day: 'numeric'})
+    
+    commentUser.appendChild(ownerName);
+    commentUser.appendChild(commentDate);
+
+    const commentText = document.createElement("div");
+    commentText.className = "comment-text";
+
+    const tempText = document.createElement("div");
+
     const icon = document.createElement("i");
     icon.className = "fas fa-comment";
+
     const span = document.createElement("span");
     span.innerText = ` ${text}`;
+
+    tempText.appendChild(icon);
+    tempText.appendChild(span);
+
     const span2 = document.createElement("span");
-    span2.innerText = " ❌";
+    span2.innerText = " 내 댓글 삭제";
     span2.className = "deleteCommentBtn";
-    newComment.appendChild(icon);
-    newComment.appendChild(span);
-    newComment.appendChild(span2);
+
+    commentText.appendChild(tempText);
+    commentText.appendChild(span2);
+    
+    
+    newComment.appendChild(commentUser);
+    newComment.appendChild(commentText);
+
     videoComments.prepend(newComment);
+
     span2.addEventListener("click", handleDelete);
 }
 
@@ -30,6 +61,7 @@ const handleSubmit = async (event) => {
     const textarea = form.querySelector("textarea");
     const text = textarea.value;
     const videoId = videoContainer.dataset.id;
+    console.log(videoContainer.dataset)
     if (text === "") {
         return;
     }
@@ -41,7 +73,6 @@ const handleSubmit = async (event) => {
         body: JSON.stringify({ text }),
     });
     // window.location.reload();
-    
     
     if (response.status === 201) {
         textarea.value = "";

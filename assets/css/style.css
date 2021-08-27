@@ -159,6 +159,12 @@ form {
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
+form .edit-label {
+  font-size: 14px;
+  display: block;
+  padding: 15px 0;
+  padding-bottom: 7px;
+}
 
 input:not(input[type=range]) {
   all: unset;
@@ -450,11 +456,10 @@ form input[type=submit] {
   padding-bottom: 20px;
 }
 .video__data .management {
-  display: block;
+  display: inline-block;
   color: cornflowerblue;
   text-decoration: underline;
   padding: 10px 0;
-  background-color: #fff;
 }
 .video__data .deleteBtn {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
@@ -488,18 +493,23 @@ form input[type=submit] {
 #commentForm textarea:focus {
   outline: none;
 }
+#commentForm textarea::placeholder {
+  font-size: 16px;
+  color: #c8c8c8;
+}
 #commentForm button {
   height: 100px;
   padding: 10px;
   margin-left: 15px;
   cursor: pointer;
   box-sizing: border-box;
+  border-radius: 10px;
 }
 
 .video__comments {
   display: flex;
   flex-direction: column;
-  max-width: 320px;
+  max-width: 100%;
   width: 100%;
   margin: 0 auto;
   margin-top: 20px;
@@ -507,9 +517,34 @@ form input[type=submit] {
 .video__comments .video__comment {
   padding: 10px;
   border-radius: 9999px;
-  background-color: white;
-  color: black;
+  color: #fff;
   margin-bottom: 10px;
+  margin: 0 30px;
+}
+.video__comments .video__comment .comment-user {
+  display: flex;
+  column-gap: 20px;
+  font-size: 18px;
+  padding-bottom: 5px;
+  align-items: center;
+}
+.video__comments .video__comment .comment-user .comment-date {
+  font-size: 13px;
+}
+.video__comments .video__comment .comment-text {
+  display: flex;
+  justify-content: space-between;
+}
+.video__comments .deleteCommentBtn {
+  cursor: pointer;
+  padding: 5px;
+  border: 1px solid #fff;
+  border-radius: 3px;
+  transition: all 0.3s;
+}
+.video__comments .deleteCommentBtn:hover {
+  background-color: #fff;
+  color: #191919;
 }
 
 a {
@@ -558,4 +593,11 @@ main {
 .message.error {
   background-color: #ff1300;
   color: white;
+}
+
+h4 {
+  padding: 30px;
+  font-size: 40px;
+  font-weight: 700;
+  text-align: center;
 }
