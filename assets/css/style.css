@@ -535,6 +535,10 @@ form input[type=submit] {
   display: flex;
   justify-content: space-between;
 }
+.video__comments .video__comment .comment-text i {
+  margin-left: -30px;
+  padding-right: 10px;
+}
 .video__comments .deleteCommentBtn {
   cursor: pointer;
   padding: 5px;

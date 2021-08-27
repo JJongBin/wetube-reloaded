@@ -6,7 +6,8 @@ const deleteBtn = document.querySelectorAll(".deleteCommentBtn");
 // const btn = form.querySelector("button");
 
 const addComment = (text, id) => {
-    // const date = new Date();
+    const nowUser = document.querySelector(".header__user").dataset.id
+    console.log(nowUser)
     const videoComments = document.querySelector(".video__comments ul");
     const newComment = document.createElement("li");
     newComment.dataset.id = id;
@@ -17,7 +18,7 @@ const addComment = (text, id) => {
     commentUser.className = "comment-user";
     
     const ownerName = document.createElement("span");
-    ownerName.innerText = "###";
+    ownerName.innerText = nowUser;
     const commentDate = document.createElement("span");
     commentDate.className = "comment-date";
     commentDate.innerText = new Date().toLocaleDateString("ko-kr", {year: 'numeric', month: 'numeric', day: 'numeric'})
@@ -86,7 +87,7 @@ const handleSubmit = async (event) => {
 
 const handleDelete = async (event) => {
     // console.log(event.target.parentNode)
-    const commentId = event.target.parentNode.dataset.id;
+    const commentId = event.target.parentNode.parentNode.dataset.id;
     const videoId = videoContainer.dataset.id;
     await fetch(`/api/${commentId}/comment`, {
         method: "DELETE",
@@ -97,7 +98,7 @@ const handleDelete = async (event) => {
     });
     // console.log(commentId)
     // console.log(videoId)
-    event.target.parentNode.remove();
+    event.target.parentNode.parentNode.remove();
 }
 
 
