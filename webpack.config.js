@@ -10,8 +10,8 @@ module.exports = {
         recorder: BASE_JS + "recorder.js",
         commentSection: BASE_JS + "commentSection.js"
     },
-    mode: "development",
-    watch: true,        // js css 수정하면 자동으로 
+    // mode: "development",
+    // watch: true,        // js css 수정하면 자동으로 (dev에서만 watch를 true로)
     plugins: [
         new MiniCssExtractPlugin({
             filename: "css/style.css"       // js와 분리해서 저장

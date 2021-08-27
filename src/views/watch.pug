@@ -22,16 +22,23 @@ block content
 
 
     div.video__data
-        p.video__title=video.title
-        small.video__owner Uploaded by 
-            a(href=`/users/${video.owner._id}`)=video.owner.name
+        div.video__meta
+            p.video__title=video.title
+            a.video__user(href=`/users/${video.owner._id}`)
+                img.videoOwner__avatar(src=video.owner.avatarUrl)
+                span=video.owner.name
+            
         small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+            |   •  조회수: #{video.meta.views} 회
+            //- small.video__owner Uploaded by 
+            //-     a(href=`/users/${video.owner._id}`)=video.owner.name
+
+
         if String(video.owner._id) === String(loggedInUser._id)
-            a(href=`${video.id}/edit`) Edit Video &rarr;
-            br
-            a(href=`${video.id}/delete`) Delete Video &rarr;
+            a.editBtn.management(href=`${video.id}/edit`) Edit Video &rarr;
+            a.deleteBtn.management(href=`${video.id}/delete`) Delete Video &rarr;
 
-
+    
     //- div
     //-     p=video.description
     //-     small=video.createdAt
