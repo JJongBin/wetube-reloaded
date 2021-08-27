@@ -21,7 +21,7 @@ export const home = async(req, res) => {
     // await로 기다려줌 (아래코드에서 db에 데이터를 결과값으로 받을때까지)
     // await는 function 내에서만 사용이 가능한대 해당 function이 asynchronous일때만 가능함! (astnc를 적어줌)
     const videos = await Video.find({}).sort({createdAt: "desc"}).populate("owner"); 
-    console.log(videos);
+    // console.log(videos);
     return res.render("home", {pageTitle: "Home", videos});
   }
   catch{
@@ -53,7 +53,9 @@ export const getEdit = async(req, res) => {
   }
   
   // 동영상 게시자만 수정페이지에 접근가능
-  if(String(video.owner) !== String(_id)){
+  if(String(video.owner._id) !== String(_id)){
+    console.log("video.owner", video.owner)
+    console.log("_id", _id)
     req.flash("error", "Not authorized")
     return res.status(403).redirect("/");
   }
@@ -252,9 +254,9 @@ export const deleteComment = async (req, res) => {
     body: { videoId },
     params: { id },
   } = req;
-  console.log(_id)
-  console.log(videoId)
-  console.log(id)
+  // console.log(_id)
+  // console.log(videoId)
+  // console.log(id)
 
   const commentOwner = await User.findById(_id);
   const video = await Video.findById(videoId);

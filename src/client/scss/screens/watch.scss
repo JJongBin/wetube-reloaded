@@ -45,9 +45,11 @@
     }
     .management {
         // background-color: ;
+        display: block;
         color: cornflowerblue;
         text-decoration: underline;
         padding: 10px 0;
+        background-color: #fff;
     }
     
     .deleteBtn {
