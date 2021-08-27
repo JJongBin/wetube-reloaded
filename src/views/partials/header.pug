@@ -19,8 +19,9 @@ header
                         if loggedInUser.avatarUrl === ""
                             span 🙂
                         else
-                            div.header__user(data-id = loggedInUser.username)
+                            div.header__user(data-id = loggedInUser.name)
                                 img.header__avatar(src=loggedInUser.avatarUrl)
+                                
                                 //- div.header__username
                                 //-     span=loggedInUser.name
                 //- li

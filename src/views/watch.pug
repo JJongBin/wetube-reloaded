@@ -42,7 +42,7 @@ block content
     if loggedIn
         div.video__add-comments
             form.vidoe__comment-form#commentForm
-                textarea(cols="30", rows="10", placeholder="Write a comments...")
+                textarea#textIn(cols="30", rows="10", placeholder="Write a comments...")
                 button Add Comment
     div.video__comments
         ul
@@ -55,7 +55,8 @@ block content
                         div
                             i.fas.fa-comment
                             span  #{comment.text}
-                        span.deleteCommentBtn  내 댓글 삭제
+                        if (loggedInUser._id === String(comment.owner))
+                            span.deleteCommentBtn  내 댓글 삭제
 
     //- span #{video}
 block scripts

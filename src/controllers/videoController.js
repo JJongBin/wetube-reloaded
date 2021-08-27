@@ -227,8 +227,8 @@ export const createComment = async (req, res) => {
     owner_name: user.name,
     video: id,
   });
-  console.log(comment);
-  console.log(user.name)
+  // console.log(comment);
+  // console.log(user)
   video.comments.push(comment._id);
   video.save();
   return res.status(201).json({ newCommentId: comment._id });

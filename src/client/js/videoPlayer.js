@@ -223,7 +223,12 @@ const handleMouseLeave = () => {
 
 const handleKey = (event) => {
     const {code} = event;
-  
+    let focusEle = document.activeElement;
+    const comment = document.getElementById("textIn");
+    
+    if (focusEle === comment) {
+        return;
+    }
     if (code === 'Space') {
         if (video.paused) {
         video.play();
