@@ -223,7 +223,7 @@ form input[type=submit] {
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 .social-login .social__btn--github:hover {
-  background-color: azure;
+  background-color: #fff;
   color: black;
   transition: all 0.4s;
 }

@@ -140,8 +140,8 @@ export const postUpload = async(req, res) => {
     const newVideo = await Video.create({
       title: title, 
       description: description,
-      fileUrl: video[0].loaction,
-      thumbUrl: thumb[0].loaction,
+      fileUrl: video[0].location,
+      thumbUrl: thumb[0].location,
       owner: _id,
       // createdAt: Date.now(),
       // hashtags: hashtags.split(",").map((word) => word.startsWith('#') ? word : `#${word}`),

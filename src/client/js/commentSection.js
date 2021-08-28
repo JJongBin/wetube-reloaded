@@ -7,7 +7,7 @@ const deleteBtn = document.querySelectorAll(".deleteCommentBtn");
 
 const addComment = (text, id) => {
     const nowUser = document.querySelector(".header__user").dataset.id
-    console.log(nowUser)
+    // console.log(nowUser)
     const videoComments = document.querySelector(".video__comments ul");
     const newComment = document.createElement("li");
     newComment.dataset.id = id;
@@ -62,7 +62,7 @@ const handleSubmit = async (event) => {
     const textarea = form.querySelector("textarea");
     const text = textarea.value;
     const videoId = videoContainer.dataset.id;
-    console.log(videoContainer.dataset)
+    // console.log(videoContainer.dataset)
     if (text === "") {
         return;
     }

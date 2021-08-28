@@ -6,7 +6,7 @@ const video = document.getElementById("preview");
 const recordBox = document.getElementById("recordBox");
 
 const recordBtn = recordBox.children[1];
-console.log(recordBtn)
+// console.log(recordBtn)
 
 const openRecordBox = () => {
     recordBox.children[0].classList.remove("hide");
@@ -74,7 +74,7 @@ const handleStart = () => {
     
     recorder.ondataavailable = (event) => {
         videoFile = URL.createObjectURL(event.data)
-        console.log(videoFile);
+        // console.log(videoFile);
         video.srcObject = null;
         video.src = videoFile;
         video.loop =true;
