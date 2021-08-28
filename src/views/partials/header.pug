@@ -16,16 +16,15 @@ header
                     a(href="/users/logout") Log Out
                 li
                     a(href=`/users/${loggedInUser._id}`)
-                        if loggedInUser.avatarUrl === ""
+                        if loggedInUser.avatarUrl === undefined
                             span 🙂
                         else
                             div.header__user(data-id = loggedInUser.name)
-                                img.header__avatar(src=loggedInUser.avatarUrl)
+                                if loggedInUser.socialOnly
+                                    img.header__avatar(src=loggedInUser.avatarUrl)
+                                else
+                                    img.header__avatar(src="/" + loggedInUser.avatarUrl)
                                 
-                                //- div.header__username
-                                //-     span=loggedInUser.name
-                //- li
-                //-     a(href="/my-profile") #{loggedInUser.name}의 Profile
             else
                 li
                     a(href="/Login") Login
