@@ -54,8 +54,8 @@ export const getEdit = async(req, res) => {
   
   // 동영상 게시자만 수정페이지에 접근가능
   if(String(video.owner._id) !== String(_id)){
-    console.log("video.owner", video.owner)
-    console.log("_id", _id)
+    // console.log("video.owner", video.owner)
+    // console.log("_id", _id)
     req.flash("error", "Not authorized")
     return res.status(403).redirect("/");
   }
@@ -140,8 +140,8 @@ export const postUpload = async(req, res) => {
     const newVideo = await Video.create({
       title: title, 
       description: description,
-      fileUrl: video[0].path,
-      thumbUrl: thumb[0].path,
+      fileUrl: video[0].loaction,
+      thumbUrl: thumb[0].loaction,
       owner: _id,
       // createdAt: Date.now(),
       // hashtags: hashtags.split(",").map((word) => word.startsWith('#') ? word : `#${word}`),

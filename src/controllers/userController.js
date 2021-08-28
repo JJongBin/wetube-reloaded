@@ -63,7 +63,7 @@ export const postLogin = async(req, res) => {
     req.session.loggedIn = true;
     req.session.user = user;
     
-    console.log(user);
+    // console.log(user);
     
     return res.redirect("/")
 }
@@ -79,7 +79,7 @@ export const startGithubLogin = (req, res) => {
     }
     const params = new URLSearchParams(config).toString();
     const finalUrl = `${baseUrl}?${params}`;
-    console.log(finalUrl);
+    // console.log(finalUrl);
     return res.redirect(finalUrl)
 }
 
@@ -90,7 +90,7 @@ export const finishGithubLogin = async(req, res) => {
         client_secret: process.env.GH_SECRET,
         code: req.query.code
     }
-    console.log(config)
+    // console.log(config)
 
     const params = new URLSearchParams(config).toString();
     const finalUrl = `${baseUrl}?${params}`;
@@ -142,7 +142,7 @@ export const finishGithubLogin = async(req, res) => {
             return res.redirect("/login")
         }
         let user = await User.findOne({email: emailObject.email});    // 있으면 
-        console.log(user)
+        // console.log(user)
         if(!user){
             // create an account  없으면 계정 생성하도록
             user = await User.create({
@@ -155,7 +155,7 @@ export const finishGithubLogin = async(req, res) => {
                 location: userData.location,
             });
         } 
-        console.log(userData)
+        // console.log(userData)
         req.session.loggedIn = true;
         req.session.user = user;
         return res.redirect("/")
@@ -186,12 +186,12 @@ export const postEdit = async(req, res) => {
     } = req;
 
 
-    console.log(file)
+    // console.log(file)
 
     const updateUser = await User.findByIdAndUpdate(
         _id, 
         {
-            avatarUrl: file ? file.path :avatarUrl,
+            avatarUrl: file ? file.location : avatarUrl,
             name, 
             email, 
             username, 
